@@ -11,8 +11,6 @@ import os
 import json
 
 bot = telepot.Bot('478183515:AAGF0ChUZrya9J0wT0VXoigT9DPEhAGqj5g')
-#pisteet = {}
-
 
 def jsonfileload():
     try:
@@ -22,7 +20,6 @@ def jsonfileload():
         pisteet = {}
     print(pisteet)
     return pisteet
-
 
 pisteet = jsonfileload()
 
@@ -39,7 +36,6 @@ def log(string):
     except IOError:
         print('Virhe tiedoston luvussa')
 
-
 def clearlog():
     logfile = open('log.html', 'w')
     logfile.write('')
@@ -47,19 +43,13 @@ def clearlog():
     log('Logi tyhjennetty')
     print('Logi tyhjennetty')
 
-
 def jsonfilesave(pisteet):
-    #pisteetnew = jsonfileload()
-    #print(pisteetnew)
-    #print(pisteet)
-    #pisteetnew.update(pisteet)
     jsonsave = json.dumps(pisteet)
     f = open('pisteet.json','w')
     f.write(jsonsave)
     print('Kirjoitettu json tiedostoon')
     log('Kirjoitettu json tiedostoon')
     f.close()
-
 
 def pistelaskuri(key, value):
     if key in pisteet:
@@ -70,64 +60,8 @@ def pistelaskuri(key, value):
         pisteet[key] = value
     pisteetsorted = OrderedDict(sorted(pisteet.items(), key=lambda x: x[0]))
     jsonfilesave(pisteetsorted)
-    #jsonfilesave(pisteet)
     print(pisteet)
     log(pisteet)
-    #return pisteet
-
-def htmltable(taulukko, m):
-    html_string = taulukko.get_html_string(attributes={'class': 'table table-striped header-fixed'})
-    if m == 1:
-        html_file = open('pisteittain.html', 'w')
-    else:
-        html_file = open('joukkuettain.html', 'w')
-
-    html_alku = open('htmlkoodialku.html', 'r')
-    html_loppu = open('htmlkoodiloppu.html', 'r')
-    htmlalku = html_alku.read()
-    htmlloppu = html_loppu.read()
-    html_file.write(htmlalku + '\n' + html_string + '\n' + htmlloppu)
-    if m ==1:
-        print('Kirjoitettu html-tiedostoon.')
-        log('Kirjoitettu html-tiedostoon.')
-    html_file.close()
-    html_alku.close()
-    html_loppu.close()
-
-def tulos(chat_id):
-    for m in range(1,-1,-1):
-        #eka taulukko
-        if m == 1:
-            taulukko = PrettyTable(['Sijoitus', 'Joukkuenro', 'Pisteet'])
-        #toka taulukko
-        else:
-            taulukko = PrettyTable(['Joukkuenro', 'Pisteet'])
-        if m == 1:
-            pisteetsortedvalue = OrderedDict(sorted(pisteet.items(), key=lambda x: x[1], reverse=True))
-        else:
-            pisteetsortedvalue = OrderedDict(sorted(pisteet.items(), key=lambda x: x[0]))
-        n = 1
-
-        for k,v in pisteetsortedvalue.items():
-            avain = str(k)
-            arvo = str(v)
-            if m == 1:
-                taulukko.add_row([n, avain, arvo])
-            else:
-                taulukko.add_row([avain,arvo])
-            n += 1
-
-        if taulukko:
-            if m == 1:
-                bot.sendMessage(chat_id, 'Tulokset tallennettu ja löytyvät osoitteesta http://jonisutinen.fi/wabubot')
-                print(str(taulukko))
-                log(str(taulukko))
-
-            htmltable(taulukko, m)
-
-        else:
-            bot.sendMessage(chat_id, 'Tuloslista tyhjä.')
-
 
 def handle(msg):
 
@@ -165,14 +99,11 @@ def handle(msg):
                 log('/add käytettty väärästä chatistä')
                 print('/add käytetty väärästä chätistä')
 
-        '''
         if '/tulos' in teksti.lower():
-            tulos(chat_id)
-        '''
+            bot.sendMessage(chat_id, 'Tulokset löytyvät osoitteesta: http://jonisutinen.fi/wabubot/')
 
         if '/nollaa' in teksti.lower():
             pisteet.clear()
-            #tulos(chat_id)
             for i in range(2):
                 jsonfilesave(pisteet, i)
             print('Sanakirja tyhjennetty')

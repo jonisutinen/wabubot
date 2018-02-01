@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
   <title>Wabulaskuri</title>
   <meta name="description" content="Se laskee">
   <link href="style.css" rel="stylesheet">
@@ -30,7 +32,6 @@
     </ul>
   </div>
 </nav>
-<button id="resetButton">Päivitä</button>
 <div class="taulukkocontainer">
   <table class="table table-striped header-fixed" id="result_table">
       <tr>
@@ -48,6 +49,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+  $.ajaxSetup({
+    cache:false
+  });
   $.getJSON('pisteet.json', function(data){
     var array=[];
     for (a in data) {
@@ -70,12 +74,6 @@ $(document).ready(function(){
     });
     $('#result_table').append(table_data);
 
-    var resetButton = document.getElementById('resetButton');
-    resetButton.onclick = reloadPage;
-
-    function reloadPage() {
-      window.location.reload();
-    }
   });
 });
 </script>
