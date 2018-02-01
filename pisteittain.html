@@ -30,10 +30,11 @@
     </ul>
   </div>
 </nav>
-
+<button id="resetButton">Päivitä</button>
 <div class="taulukkocontainer">
   <table class="table table-striped header-fixed" id="result_table">
       <tr>
+          <th>Sijoitus</th>
           <th>Joukkuenro</th>
           <th>Pisteet</th>
       </tr>
@@ -47,17 +48,34 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-  console.log('alku');
-  $.getJSON('pisteet1.json', function(data){
-    console.log('getjsoned');
+  $.getJSON('pisteet.json', function(data){
+    var array=[];
+    for (a in data) {
+      array.push([a, data[a]])
+    };
+    array.sort(function(a,b){
+      return a[1] - b[1];
+    });
+    array.reverse();
     var table_data = '';
-    $.each(data, function(key, val){
+    var num = 1;
+
+    $.each(array, function(key, val){
       table_data += '<tr>';
-      table_data += '<td>'+key+'</td>';
-      table_data += '<td>'+val+'</td>';
+      table_data += '<td>'+num+'</td>';
+      table_data += '<td>'+val[0]+'</td>';
+      table_data += '<td>'+val[1]+'</td>';
       table_data += '</tr>';
+      num++;
     });
     $('#result_table').append(table_data);
+
+    var resetButton = document.getElementById('resetButton');
+    resetButton.onclick = reloadPage;
+
+    function reloadPage() {
+      window.location.reload();
+    }
   });
 });
 </script>

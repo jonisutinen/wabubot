@@ -16,7 +16,7 @@ bot = telepot.Bot('478183515:AAGF0ChUZrya9J0wT0VXoigT9DPEhAGqj5g')
 
 def jsonfileload():
     try:
-        pisteet = json.load(open('pisteet1.json'))
+        pisteet = json.load(open('pisteet.json'))
         pisteet = {int(k):float(v) for k,v in pisteet.items()}
     except IOError:
         pisteet = {}
@@ -48,16 +48,13 @@ def clearlog():
     print('Logi tyhjennetty')
 
 
-def jsonfilesave(pisteet, i):
+def jsonfilesave(pisteet):
     #pisteetnew = jsonfileload()
     #print(pisteetnew)
     #print(pisteet)
     #pisteetnew.update(pisteet)
     jsonsave = json.dumps(pisteet)
-    if i == 0:
-        f = open('pisteet1.json','w')
-    else:
-        f = open('pisteet2.json','w')
+    f = open('pisteet.json','w')
     f.write(jsonsave)
     print('Kirjoitettu json tiedostoon')
     log('Kirjoitettu json tiedostoon')
@@ -71,13 +68,8 @@ def pistelaskuri(key, value):
         pisteet[key] = pisteet2
     else:
         pisteet[key] = value
-    for i in range(2):
-        if i == 0:
-            pisteetsorted = OrderedDict(sorted(pisteet.items(), key=lambda x: x[1], reverse=True))
-            jsonfilesave(pisteetsorted, i)
-        else:
-            pisteetsorted = OrderedDict(sorted(pisteet.items(), key=lambda x: x[0]))
-            jsonfilesave(pisteetsorted, i)
+    pisteetsorted = OrderedDict(sorted(pisteet.items(), key=lambda x: x[0]))
+    jsonfilesave(pisteetsorted)
     #jsonfilesave(pisteet)
     print(pisteet)
     log(pisteet)
