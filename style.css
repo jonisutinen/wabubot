@@ -32,3 +32,16 @@ th {
 html, body {
   width: 100%;
 }
+
+.reload {
+  height: 15px;
+  width: 15px;
+}
+
+.btn {
+    outline: none !important;
+}
+
+.btn:focus {
+  outline: none;
+}
