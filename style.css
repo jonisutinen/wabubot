@@ -1,0 +1,34 @@
+
+
+table, td, th{
+  width: auto;
+  font-size: 20px;
+  border-collapse: collapse;
+  text-align: center;
+
+}
+
+table {
+  border: 1px solid #aeaeae;
+  margin: 0 auto;
+}
+
+
+th,td {
+  padding: 5px 20px 5px 20px;
+  text-align: center;
+  border-bottom: 1px solid #aeaeae;
+}
+
+th {
+  background-color: #2D7CFF;
+  color: white;
+}
+
+.taulukkocontainer {
+  padding-top: 40px;
+}
+
+html, body {
+  width: 100%;
+}
