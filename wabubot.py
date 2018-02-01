@@ -105,7 +105,7 @@ def handle(msg):
         if '/nollaa' in teksti.lower():
             pisteet.clear()
             for i in range(2):
-                jsonfilesave(pisteet, i)
+                jsonfilesave(pisteet)
             print('Sanakirja tyhjennetty')
             log('Sanakirja tyhjennetty')
             bot.sendMessage(chat_id, 'Tuloslista nollattu.')
