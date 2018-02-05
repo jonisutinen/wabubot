@@ -9,6 +9,7 @@ import time
 import datetime
 import os
 import json
+import pprint
 
 bot = telepot.Bot('478183515:AAGF0ChUZrya9J0wT0VXoigT9DPEhAGqj5g')
 
@@ -23,15 +24,26 @@ def jsonfileload():
 
 pisteet = jsonfileload()
 
+def getname():
+    response = bot.getUpdates()
+    try:
+        nimi = response[0]['message']['from']['first_name'] + ' ' + response[0]['message']['from']['last_name'] + \
+        ' ' + response[0]['message']['from']['username']
+    except IndexError:
+        nimi = ''
+    return nimi
+
+
 def log(string):
     try:
+        name = getname()
         logfile = open('log.html', 'r')
         logi = logfile.read()
         logfile.close()
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%d.%m.%Y %H:%M:%S')
         logfile = open('log.html', 'w')
-        logfile.write('<p>'+ '[' + str(st) + ']: ' + str(string) + '<p>' + logi)
+        logfile.write('<p>'+ '[' + str(st) + ']: ' + '[' + name + '] ' + str(string) + '<p>' + logi)
         logfile.close()
     except IOError:
         print('Virhe tiedoston luvussa')
@@ -99,10 +111,10 @@ def handle(msg):
                 log('/add käytettty väärästä chatistä')
                 print('/add käytetty väärästä chätistä')
 
-        if '/tulos' in teksti.lower():
+        elif '/tulos' in teksti.lower():
             bot.sendMessage(chat_id, 'Tulokset löytyvät osoitteesta: http://jonisutinen.fi/wabubot/')
 
-        if '/nollaa' in teksti.lower():
+        elif '/nollaa' in teksti.lower():
             pisteet.clear()
             for i in range(2):
                 jsonfilesave(pisteet)
@@ -110,15 +122,19 @@ def handle(msg):
             log('Sanakirja tyhjennetty')
             bot.sendMessage(chat_id, 'Tuloslista nollattu.')
 
-        if '/clearlog' in teksti.lower():
+        elif '/clearlog' in teksti.lower():
             clearlog()
 
-        if '/komennot' in teksti.lower():
+        elif '/komennot' in teksti.lower():
             bot.sendMessage(chat_id, '/add jnro pisteet\n/tulos')
 
-        if '/getchatid' in teksti.lower():
+        elif 'getchatid' in teksti.lower():
             print(chat_id)
             log(chat_id)
+
+        else:
+            print(teksti)
+            log(teksti)
 
 bot.message_loop(handle)
 print ('Kuuntelen kylla...')
