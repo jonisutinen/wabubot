@@ -31,6 +31,14 @@ def getname():
         ' ' + response[0]['message']['from']['username']
     except IndexError:
         nimi = ''
+    except KeyError:
+        try:
+            nimi = response[0]['message']['from']['first_name'] + ' ' + response[0]['message']['from']['last_name']
+        except KeyError:
+            try:
+                nimi = response[0]['message']['from']['username']
+            except KeyError:
+                nimi = ''
     return nimi
 
 
