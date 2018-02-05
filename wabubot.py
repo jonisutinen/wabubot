@@ -37,7 +37,8 @@ def getname():
 
 def log(string):
     try:
-        name = getname()
+        #name = getname()
+        name = ''
         logfile = open('log.html', 'r')
         logi = logfile.read()
         logfile.close()
