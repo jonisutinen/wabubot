@@ -27,18 +27,11 @@ pisteet = jsonfileload()
 def getname():
     response = bot.getUpdates()
     try:
-        nimi = response[0]['message']['from']['first_name'] + ' ' + response[0]['message']['from']['last_name'] + \
-        ' ' + response[0]['message']['from']['username']
+        nimi = response[0]['message']['from']['first_name'] + ' ' + response[0]['message']['from']['last_name']
     except IndexError:
         nimi = ''
     except KeyError:
-        try:
-            nimi = response[0]['message']['from']['first_name'] + ' ' + response[0]['message']['from']['last_name']
-        except KeyError:
-            try:
-                nimi = response[0]['message']['from']['username']
-            except KeyError:
-                nimi = ''
+        nimi = ''
     return nimi
 
 
