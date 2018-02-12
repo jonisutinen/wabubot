@@ -45,3 +45,7 @@ html, body {
 .btn:focus {
   outline: none;
 }
+
+#copyraitti {
+  text-align: right;
+}
