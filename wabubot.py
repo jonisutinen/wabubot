@@ -117,12 +117,16 @@ def handle(msg):
             bot.sendMessage(chat_id, 'Tulokset löytyvät osoitteesta: http://jonisutinen.fi/wabubot/')
 
         elif '/nollaa' in teksti.lower():
-            pisteet.clear()
-            for i in range(2):
+            if chat_id == -1001330616963:
+                pisteet.clear()
                 jsonfilesave(pisteet)
-            print('Sanakirja tyhjennetty')
-            log('Sanakirja tyhjennetty')
-            bot.sendMessage(chat_id, 'Tuloslista nollattu.')
+                print('Sanakirja tyhjennetty')
+                log('Sanakirja tyhjennetty')
+                bot.sendMessage(chat_id, 'Tuloslista nollattu.')
+            else:
+                bot.sendMessage(chat_id, 'Väärä chatti urpo')
+                log('/nollaa käytettty väärästä chatistä')
+                print('/nollaa käytetty väärästä chätistä')
 
         elif '/clearlog' in teksti.lower():
             clearlog()
