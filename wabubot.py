@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-
+# WABUBOT v2
 import telepot
 import sys
 import time
