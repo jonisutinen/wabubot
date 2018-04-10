@@ -85,7 +85,7 @@ def handle(msg):
     	teksti = msg['text']
 
         if '/add' in teksti.lower():
-            if chat_id == -1001330616963:
+            if chat_id == -1001194882603 or chat_id == 269679184:
                 piste = teksti.split()
                 print(piste[1])
                 try:
@@ -98,18 +98,18 @@ def handle(msg):
                                 pistelaskuri(int(piste[1]), arvo)
                                 bot.sendMessage(chat_id, 'Lisäys onnistui ' + str(piste[1]) + ' ' + str(arvo))
                             else:
-                                bot.sendMessage(chat_id, 'Lisäys epäonnistui, sallittu pistemäärä 0-10.')
+                                bot.sendMessage(chat_id, 'Lisäys epäonnistui, sallittu pistemäärä 0-10.' + '\n' + 'Virhe: ' + str(teksti))
 
                         except IndexError:
-                            bot.sendMessage(chat_id, 'Unohditko lisätä pisteet?\nKomennon käyttö: /add jnro pisteet\nEsim. /add 1 10')
+                            bot.sendMessage(chat_id, 'Unohditko lisätä pisteet?\nKomennon käyttö: /add jnro pisteet\nEsim. /add 1 10' + '\n' + 'Virhe: ' + str(teksti))
                         except ValueError:
-                            bot.sendMessage(chat_id, 'Pisteet jotain muuta kuin numeroita, yritäppäs uudestaan')
+                            bot.sendMessage(chat_id, 'Pisteet jotain muuta kuin numeroita, yritäppäs uudestaan' + '\n' + 'Virhe: ' + str(teksti))
                     else:
-                        bot.sendMessage('Yritäppäs uudestaan')
+                        bot.sendMessage('Yritäppäs uudestaan' + '\n' + 'Virhe: ' + str(teksti))
                 except ValueError:
-                    bot.sendMessage(chat_id, 'Joukkuenumero virheellinen, yritäppäs uudestaan')
+                    bot.sendMessage(chat_id, 'Joukkuenumero virheellinen, yritäppäs uudestaan' + '\n' + 'Virhe: ' + str(teksti))
             else:
-                bot.sendMessage(chat_id, 'Väärä chatti urpo')
+                bot.sendMessage(chat_id, 'Väärä chatid'+ '\n' + 'Virhe: ' + str(teksti))
                 log('/add käytettty väärästä chatistä')
                 print('/add käytetty väärästä chätistä')
 
@@ -117,14 +117,14 @@ def handle(msg):
             bot.sendMessage(chat_id, 'Tulokset löytyvät osoitteesta: http://jonisutinen.fi/wabubot/')
 
         elif '/nollaa' in teksti.lower():
-            if chat_id == -1001330616963:
+            if chat_id == -1001194882603 or chat_id == 269679184:
                 pisteet.clear()
                 jsonfilesave(pisteet)
                 print('Sanakirja tyhjennetty')
                 log('Sanakirja tyhjennetty')
                 bot.sendMessage(chat_id, 'Tuloslista nollattu.')
             else:
-                bot.sendMessage(chat_id, 'Väärä chatti urpo')
+                bot.sendMessage(chat_id, 'Väärä chatid' + '\n' + 'Virhe: ' + str(teksti))
                 log('/nollaa käytettty väärästä chatistä')
                 print('/nollaa käytetty väärästä chätistä')
 
@@ -134,13 +134,16 @@ def handle(msg):
         elif '/komennot' in teksti.lower():
             bot.sendMessage(chat_id, '/add jnro pisteet\n/tulos')
 
-        elif 'getchatid' in teksti.lower():
+        elif '/getchatid' in teksti.lower():
             print(chat_id)
             log(chat_id)
 
-        else:
-            print(teksti)
-            log(teksti)
+        elif '/test' in teksti.lower():
+            if chat_id == -1001194882603 or chat_id == 269679184:
+                bot.sendMessage(chat_id, 'Toimii')
+            else:
+                bot.sendMessage(chat_id, 'Väärä chatid')
+
 
 bot.message_loop(handle)
 print ('Kuuntelen kylla...')
