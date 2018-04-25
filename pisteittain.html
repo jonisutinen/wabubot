@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <title>Wabulaskuri</title>
+  <meta name="description" content="Se laskee">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="index.html">Wabu ei lobu</a>
+    <form class="form-inline">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><span class="reload"><img src="refresh.png" width="20px"/></span></button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </form>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Tulokset
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="pisteittain.html">Pisteiden mukaan</a>
+          <a class="dropdown-item" href="joukkuettain.html">Joukkuenumeron mukaan</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="taulukkocontainer">
+  <table class="table table-striped" id="result_table">
+      <tr>
+          <th>Sijoitus</th>
+          <th>Joukkue</th>
+          <th>Pisteet</th>
+      </tr>
+  </table>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $.ajaxSetup({
+    cache:false
+  });
+  $.getJSON('pisteet.json', function(data){
+    var array=[];
+    for (a in data) {
+      array.push([a, data[a]])
+    };
+    array.sort(function(a,b){
+      return a[1] - b[1];
+    });
+    array.reverse();
+    var table_data = '';
+    var num = 1;
+
+    $.each(array, function(key, val){
+      table_data += '<tr>';
+      table_data += '<td>'+num+'</td>';
+      table_data += '<td>'+val[0]+'</td>';
+      table_data += '<td>'+val[1]+'</td>';
+      table_data += '</tr>';
+      num++;
+    });
+    $('#result_table').append(table_data);
+
+  });
+});
+</script>
+</body>
+</html>
